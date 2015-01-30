@@ -1,6 +1,7 @@
 class SubjectsController < ApplicationController
 
-  layout false
+  # layout false
+  layout 'admin'
 
   def index
     # we defined sorted in the model with a lambda
