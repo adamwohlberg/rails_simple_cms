@@ -12,6 +12,8 @@ class PagesController < ApplicationController
 
   def new
     @page = Page.new({:name => "Default"})
+    @subjects = Subject.order('position ASC')
+    @page_count = Page.count + 1
   end
 
   def create
@@ -24,6 +26,8 @@ class PagesController < ApplicationController
       redirect_to(:action => 'index')
     else
     #If save fails, redisplay the form so user can fix the problems
+      @subjects = Subject.order('position ASC')
+      @page_count = Page.count + 1
       render('new')
     end
   end
@@ -38,12 +42,16 @@ class PagesController < ApplicationController
       redirect_to(:action => 'show', :id => @page.id)
     else
     #If save fails, redisplay the form so user can fix the problems
+      @subjects = Subject.order('position ASC')
+      @page_count = Page.count
       render('edit')
     end
   end
 
   def edit
     @page = Page.find(params[:id])
+    @subjects = Subject.order('position ASC')
+    @page_count = Page.count
   end
 
   def delete
@@ -58,11 +66,12 @@ class PagesController < ApplicationController
 
   private
 
-  def page_params
-  # same as using "params[:subject]", except that it:
-  # - raises an error if :subject is not present
-  # - allows lists attributes to be mass-assigned
-    params.require(:subject_id).permit(:subject_id, :name, :permalink, :position, :visible)
-  end
+    def page_params
+      params.require(:page).permit(:subject_id, :name, :permalink, :position, :visible)
+    end
+
 end
+
+
+
 

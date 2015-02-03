@@ -22,6 +22,7 @@ class SubjectsController < ApplicationController
       redirect_to(:action => 'index')
     else
     #If save fails, redisplay the form so user can fix the problems
+      @subject_count = Subject.count + 1
       render('new')
     end
   end
@@ -36,35 +37,29 @@ class SubjectsController < ApplicationController
       redirect_to(:action => 'show', :id => @subject.id)
     else
     #If save fails, redisplay the form so user can fix the problems
+      @subject_count = Subject.count
       render('edit')
     end
   end
 
   def new
     @subject = Subject.new(:name => "Joe Cockster", :position => 69)
+    @subject_count = Subject.count + 1
   end
 
   def edit
     @subject = Subject.find(params[:id])
-  end
-
-  def delete
-    @subject = Subject.find(params[:id]) 
-  end
-
-  def destroy
-    subject = Subject.find(params[:id]).destroy
-    flash[:notice] = "Subject '#{subject.name}' destroyed successfully be-atch!"
-    redirect_to(:action => 'index')
+    @subject_count = Subject.count
   end
 
   private
 
-  def subject_params
-  # same as using "params[:subject]", except that it:
-  # - raises an error if :subject is not present
-  # - allows lists attributes to be mass-assigned
-    params.require(:subject).permit(:name, :position, :visible)
-  end
+    def subject_params
+      # same as using "params[:subject]", except that it:
+      # - raises an error if :subject is not present
+      # - allows listed attributes to be mass-assigned
+      params.require(:subject).permit(:name, :position, :visible, :created_at)
+    end
 
 end
+
