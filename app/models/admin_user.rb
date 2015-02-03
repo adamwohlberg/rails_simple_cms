@@ -8,7 +8,7 @@ class AdminUser < ActiveRecord::Base
   has_many :sections, :through => :section_edits
 
   EMAIL_REGEX = /\A[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}\Z/i
-
+  FORBIDDEN_USERNAMES = ['littlebopeep','humptydumpty','marymary']
   # shortcut validations, aka "sexy validations"
   validates :first_name, :presence => true,
                          :length => { :maximum => 25 }
@@ -32,4 +32,26 @@ class AdminUser < ActiveRecord::Base
   # validates_format_of :email, :with => EMAIL_REGEX
   # validates_confirmation_of :email
 
+  validate :username_is_allowed
+  # validate :no_new_users_on_saturday, :on => :create
+
+  def username_is_allowed
+  	if FORBIDDEN_USERNAMES.include?(username)
+  		errors.add(:username, "has been restricted from use.")
+  	end
+  end
+
+  # def no_new_users_on_saturday
+  # 	if Time.now.wday == 6
+  # 		errors[:base] << "No new users on Saturdays - it's the Sabbath, yo!"
+  # 	end
+  # end
+
 end
+
+
+
+
+
+
+
