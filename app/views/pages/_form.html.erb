@@ -1,14 +1,22 @@
 		<table summary="Page form fields">
 			<tr>
-				<th>Name</th>
+				<th>Subject ID</th>
+				<td><%= f.text_field(:subject_id) %></td>
+			</tr>
+			<tr>
+				<th><%= f.label(:name, "Name") %></th>
 				<td><%= f.text_field(:name) %></td>
 			</tr>
 			<tr>
-				<th>Position</th>
+				<th><%= f.label(:permalink) %></th>
+				<td><%= f.text_field(:permalink) %></td>
+			</tr>
+			<tr>
+				<th><%= f.label(:position) %></th>
 				<td><%= f.text_field(:position) %></td>
 			</tr>
 			<tr>
-				<th>Visible</th>
+				<th><%= f.label(:visible) %></th>
 				<td><%= f.text_field(:visible) %></td>
 			</tr>		
 		</table>
