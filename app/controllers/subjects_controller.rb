@@ -3,6 +3,8 @@ class SubjectsController < ApplicationController
   # layout false
   layout 'admin'
 
+  before_action :confirm_logged_in
+
   def index
     # we defined sorted in the model with a lambda
     @subjects = Subject.sorted
