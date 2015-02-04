@@ -9,21 +9,31 @@ class AdminUsersController < ApplicationController
   end
 
   def new
-  	@admin_user = AdminUser.find(params[:id])
+  	@admin_user = AdminUser.new
   end
 
   def create 
-  	@admin_user = AdminUser.new(:name => "Adminy Takminabad") 
-   	@admin_user_count = AdminUser.count
+  	@admin_user = AdminUser.new(admin_user_params) 
+  	if @admin_user.save
+  		flash[:notice] = 'Admin user created.'
+  		redirect_to(:action => 'index')
+  	else
+  		render('new')
+  	end
   end
 
   def edit
   	@admin_user = AdminUser.find(params[:id])
-  	@admin_user_count = AdminUser.count
   end
 
   def update
   	@admin_user = AdminUser.find(params[:id])
+  	if @admin_user.update_attributes(admin_user_params)
+  		flash[:notice] = 'Admin user updated.'
+  		redirect_to(:action => 'index')
+  	else
+  		render('edit')
+  	end
   end
 
   def delete
@@ -31,8 +41,9 @@ class AdminUsersController < ApplicationController
   end
 
   def destroy
-   	@admin_user = AdminUser.find(params[:id])
-
+   	AdminUser.find(params[:id]).destroy
+   	flash[:notice] = "Admin user clobbered"
+   	redirect_to(:action => 'index')
   end
 
   private
@@ -41,6 +52,6 @@ class AdminUsersController < ApplicationController
       # same as using "params[:subject]", except that it:
       # - raises an error if :subject is not present
       # - allows listed attributes to be mass-assigned
-      # params.require(:subject).permit(:name, :position, :visible, :created_at)
+      params.require(:admin_user).permit(:first_name, :last_name, :email, :username, :password)
     end
 end
