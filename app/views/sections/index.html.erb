@@ -1,14 +1,15 @@
 <% @page_title = "Sections" %>
 
+<%= link_to("<< Back to Subjects", {:controller => 'pages', :action => 'index', :subject_id => @page.subject_id}, :class => 'back-link') %>
+
 <div class="sections index">
 	<h2>Sections</h2>
 
-	<%= link_to("Add New Section", {:action => 'new'}, :class => 'action new') %>
+	<%= link_to("Add New Section", {:action => 'new', :page_id => @page.id}, :class => 'action new') %>
 
 	<table class="listing" summary="Section list">
 		<tr class="header">
-			<th>&nbsp;</th>
-			<th>Page ID</th>
+			<th>Page</th>
 			<th>Section</th>
 			<th>Content Type</th>
 			<th>Visible</th>
@@ -16,7 +17,7 @@
 		</tr>
 		<% @sections.each do |section| %>
 		<tr>
-			<td><%= section.page_id %></td>
+			<td><%= section.page.name if section.page %></td>
 			<td><%= section.position %></td>
 			<td><%= section.name %></td>
 			<td class="center"><%= status_tag(section.visible) %></td>
