@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
 
+  get 'public/index'
+
+  get 'public/show'
+
   root "demo#index"
 
   get 'admin', :to => "access#index"
