@@ -8,6 +8,8 @@ class Section < ActiveRecord::Base
 
 	acts_as_list :scope => :page
 
+	after_save :touch_page
+	
 	validates_presence_of :name 
 	validates_length_of :name, :maximum => 255
 	validates_inclusion_of :content_type, :in => CONTENT_TYPES,
@@ -19,4 +21,9 @@ class Section < ActiveRecord::Base
 	scope :sorted, lambda { order("sections.position ASC") }
 	scope :newest_first, lambda { order("sections.created_at DESC") }
 
+	private
+
+		def touch_page
+			page.touch
+		end
 end
