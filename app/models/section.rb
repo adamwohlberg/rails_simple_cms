@@ -6,6 +6,8 @@ class Section < ActiveRecord::Base
 
 	CONTENT_TYPES = ['text', 'HTML']
 
+	acts_as_list :scope => :page
+
 	validates_presence_of :name 
 	validates_length_of :name, :maximum => 255
 	validates_inclusion_of :content_type, :in => CONTENT_TYPES,

@@ -54,6 +54,16 @@ class SubjectsController < ApplicationController
     @subject_count = Subject.count
   end
 
+  def delete
+    @subject = Subject.find(params[:id])
+  end
+
+  def destroy
+    subject = Subject.find(params[:id]).destroy
+    flash[:notice] = "Subject destroyed successfully."
+    redirect_to(:action => 'index')
+  end
+
   private
 
     def subject_params
