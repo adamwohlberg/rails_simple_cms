@@ -39,4 +39,5 @@ class Page < ActiveRecord::Base
 			# move them to another page.
 		section.destroy
 		end
+	end
 end
